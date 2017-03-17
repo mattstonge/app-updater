@@ -1,0 +1,12 @@
+---
+  - name: app updater
+    hosts: web
+
+    tasks:
+      - name: refresh yum cache
+          yum:
+            state: present
+            update_cache: yes
+            name: kernel
+            
+ 
