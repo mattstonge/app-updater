@@ -3,10 +3,29 @@
     hosts: web
 
     tasks:
+      - name: stop application
+          service:
+            name: httpd.service
+            state: stopped
+            enabled: yes
+            tags: service
+
+      - name: backup config file
+          copy:
+            remote_src: /etc/httpd/conf/httpd.config
+            dest: /etc/httpd/conf/httpd.config.orig
+            tags: config
+
       - name: refresh yum cache
           yum:
             state: present
             update_cache: yes
-            name: kernel
-            
- 
+            name: httpd
+            tags: packages
+
+      - name: restart the service
+          service:
+            name: httpd.service
+            state: started
+            enabled: yes
+            tags: service
