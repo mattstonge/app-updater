@@ -8,8 +8,7 @@
           name: httpd.service
           state: stopped
           enabled: yes
-        tags: service
-
+    
       #- name: backup config file
       #  copy:
       #    remote_src: /etc/httpd/conf/httpd.config
@@ -18,14 +17,13 @@
 
       - name: refresh yum cache
         yum:
-          state: present
+          state: latest
           update_cache: yes
           name: httpd
-          tags: packages
-
+          
       - name: restart the service
         systemd:
           name: httpd.service
           state: started
           enabled: yes
-        tags: service
+   
