@@ -8,16 +8,20 @@
           name: httpd.service
           state: stopped
           enabled: yes
+        tags: services
     
       - name: refresh yum cache
         yum:
           state: latest
           update_cache: yes
           name: httpd
+        tags: updates
           
       - name: restart the service
         systemd:
           name: httpd.service
           state: started
           enabled: yes
+        tags: services
+        
    
