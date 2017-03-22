@@ -1,0 +1,58 @@
+---
+  - name Subscription Management Playbook v1.0
+    hosts: {{ myhosts }}
+    vars:
+      - myuserid
+      - mypasswd
+      - mypoolid
+      - myhosts
+
+    tasks:
+      - name: Get Registered
+        redhat_subscription:
+          user:  {{ myuserid }}
+          password: {{ mypasswd }}
+          autosubscribe: no
+          pool: {{ mypoolid }}
+        tags: register
+
+      - name: Flush default RHEL7 added repos
+        command:
+          freeform: "yum-config-manager --disable rhel*"
+        tags: reset-repos
+
+      - name: yum-clean-metadata
+        command: yum clean metadata
+          args:
+          warn: no
+        tags: reset-cache
+
+      - name: Add repo 1
+        yum_repository:
+          name: rhel-7-server-extras-rpms
+          enabled: yes
+        tags: add-repos
+
+      - name: Add repo 2
+        yum_repository:
+          name: rhel-7-server-rpms
+          enabled: yes
+        tags: add-repos
+
+      - name: Add repo 3
+        yum_repository:
+          name: rhel-7-server-optional-rpms
+          enabled: yes
+        tags: add-repos
+
+      - name: Add repo 4
+        yum_repository:
+          name: rhel-7-server-rh-common-rpms
+          enabled: yes
+        tags: add-repos
+
+      - name: Add repo 5
+        yum_repository:
+          name: rhel-7-server-supplementary-rpms
+          enabled: yes
+        tags: add-repos
