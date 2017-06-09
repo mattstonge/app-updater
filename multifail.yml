@@ -1,0 +1,17 @@
+---
+- name: Multifail
+  hosts: localhost
+  tasks:
+    - name: Catalicious
+      command: "{{ item }}"
+      register: cat_results
+      ignore_errors: True
+      changed_when: False
+      with_items:
+        - cat /etc/issue
+        - cat /etc/issue  # change this to cat a non-existent file to force failure
+
+    - name: Multinotify
+      fail: msg="Hello world!"
+      when: item.rc != 0
+      with_items: "{{ cat_results.results }}"
