@@ -1,6 +1,6 @@
 ---
 - name: Multifail
-  hosts: localhost
+  hosts: web
   tasks:
     - name: Catalicious
       command: "{{ item }}"
