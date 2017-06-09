@@ -8,6 +8,7 @@
       ignore_errors: True
       changed_when: False
       with_items:
+        - cat /etc/hostname
         - cat /etc/redhat-release
         - cat /etc/issue  # change this to cat a non-existent file to force failure
 
