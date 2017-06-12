@@ -1,0 +1,22 @@
+---
+- name: timezone
+  hosts: web 
+  remote_user: ansibleuser
+  become: yes
+  become_method: sudo
+  become_user: root
+ 
+  tasks:
+  - name: Check the date (prerun status)
+    command: /bin/date
+    tags: test
+
+  - name: change timezone
+    timezone: name="America/NewYork"
+    tags: configure
+
+  - name: verify the tz set
+    command: /bin/date 
+    tags: verify
+    
+    
